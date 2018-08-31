@@ -9,16 +9,18 @@ using Lab29WebAPI.Models;
 namespace Lab29WebAPI.Controllers
 {
     public class MoviesController : ApiController
-    {
+    {   
+        
         //get list of * movies
         //URL.../api/lab29/GetAllMovies
-        [HttpGet]
+       
         public List<movie> GetAllMovies()
         {
+            //.../api/movies/GetAllMovies
             //ORM create obj
             moviedbEntities ORM = new moviedbEntities();
             //create list
-            List<movie> movieList = ORM.movies.ToList();
+            List<movie> movieList = ORM.movies1.ToList();
 
             return movieList;
         }
@@ -31,9 +33,9 @@ namespace Lab29WebAPI.Controllers
             //ORM
             moviedbEntities ORM = new moviedbEntities();
             //create list
-            List<movie> movieList = ORM.movies.ToList();
+            List<movie> movieList = ORM.movies1.ToList();
 
-            return ORM.movies.Where(x => x.category.ToLower() == category).ToList();
+            return ORM.movies1.Where(x => x.category.ToLower() == category).ToList();
         }
 
 

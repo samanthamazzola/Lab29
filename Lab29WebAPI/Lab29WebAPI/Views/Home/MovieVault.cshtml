@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "MovieVault";
+}
+
+<br />
+<div class="jumbotron">
+    <table class="table" value="Movie Vault" border="1">
+        <tr>
+            <td><label>Title</label></td>
+            <td><label>Category</label></td>
+            <td><label>Description</label></td>
+        </tr>
+        @foreach (var movie in ViewBag.movie)
+        {
+            <tr>
+                <td>@movie.title</td>
+                <td>@movie.category</td>
+                <td>@movie.description</td>
+            </tr>
+        }
+    </table>
+</div>
+<br />
+

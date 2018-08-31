@@ -25,6 +25,6 @@ namespace Lab29WebAPI.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<movie> movies { get; set; }
+        public virtual DbSet<movie> movies1 { get; set; }
     }
 }
