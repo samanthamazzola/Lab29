@@ -18,5 +18,10 @@ namespace Lab29WebAPI.Controllers
 
             return View();
         }
+
+        public ActionResult MovieVault(string title)
+        {
+            return View();
+        }
     }
 }

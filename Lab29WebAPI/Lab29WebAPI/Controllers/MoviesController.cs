@@ -9,11 +9,10 @@ using Lab29WebAPI.Models;
 namespace Lab29WebAPI.Controllers
 {
     public class MoviesController : ApiController
-    {   
-        
+    {
+
         //get list of * movies
-        //URL.../api/lab29/GetAllMovies
-       
+        [HttpGet]
         public List<movie> GetAllMovies()
         {
             //.../api/movies/GetAllMovies
@@ -26,7 +25,7 @@ namespace Lab29WebAPI.Controllers
         }
 
         //get list of movies per category
-        //URL.../api/lab29/GetMoviesPerCategory
+        //URL.../api/Movies/MoviesByCategory?category={category}
         [HttpGet]
         public List<movie> MoviesByCategory(string category)
         {
@@ -36,6 +35,52 @@ namespace Lab29WebAPI.Controllers
             List<movie> movieList = ORM.movies1.ToList();
 
             return ORM.movies1.Where(x => x.category.ToLower() == category).ToList();
+        }
+
+        //action to get random movie pick
+        //.... /api/movies/GetRandomMovie
+        [HttpGet] 
+        public movie GetRandomMovie()
+        {
+            //ORM
+            moviedbEntities ORM = new moviedbEntities();
+            //create list
+            List<movie> movies1 = ORM.movies1.ToList();
+            //use random number to select a joke
+            Random r = new Random();
+            int selected = r.Next(0, movies1.Count);
+
+            return movies1[selected];
+        }
+
+        //action to get random movie pick by category
+        //.... /api/movies/GetRandomMovie
+        [HttpGet]
+        public movie GetRandomMovieByCategory()
+        {
+            //ORM
+            moviedbEntities ORM = new moviedbEntities();
+            //create list
+            List<movie> movies1 = ORM.movies1.ToList();
+            //use random number to select a joke
+            Random r = new Random();
+            int selected = r.Next(0, movies1.Count);
+
+            return movies1[selected];
+        }
+
+        //get movie info by title SEARCH 
+        //URL..../
+        [HttpGet]
+        public List<movie> SearchMovieByTitle(string title)
+        {
+            //obj
+            moviedbEntities ORM = new moviedbEntities();
+
+            List<movie> movieList = ORM.movies1.ToList();
+
+            return ORM.movies1.Where(x => x.title.ToLower().Contains
+            (title.ToLower())).ToList();
         }
 
 
