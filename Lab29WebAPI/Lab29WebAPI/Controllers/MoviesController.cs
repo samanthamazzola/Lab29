@@ -54,33 +54,63 @@ namespace Lab29WebAPI.Controllers
         }
 
         //action to get random movie pick by category
-        //.... /api/movies/GetRandomMovie
         [HttpGet]
-        public movie GetRandomMovieByCategory()
+        public movie GetRandomMovieByCategory(string category)
         {
+            //url.... /api/movies/GetRandomMovieByCategory?category=SciFi
             //ORM
             moviedbEntities ORM = new moviedbEntities();
             //create list
-            List<movie> movies1 = ORM.movies1.ToList();
-            //use random number to select a joke
-            Random r = new Random();
-            int selected = r.Next(0, movies1.Count);
+            List<movie> moviesByCateogry = ORM.movies1.Where(x => x.category.ToLower() == category.ToLower()).ToList();
+            Random n = new Random();
+            int selected = n.Next(0, moviesByCateogry.Count());
 
-            return movies1[selected];
+            return moviesByCateogry[selected];
         }
 
-        //get movie info by title SEARCH 
-        //URL..../
+        //get random movie by quantity
         [HttpGet]
-        public List<movie> SearchMovieByTitle(string title)
+        public List<movie> GetRandomMoviesByQuantity(int quantity) 
         {
+            //url.....api/movies/GetRandomMoviesByQuantity?quantity=1
             //obj
             moviedbEntities ORM = new moviedbEntities();
-
             List<movie> movieList = ORM.movies1.ToList();
 
-            return ORM.movies1.Where(x => x.title.ToLower().Contains
-            (title.ToLower())).ToList();
+            List<movie> randomMovies = new List<movie>();
+            for (int i = 0; i < quantity; i++)
+            {
+                Random r = new Random();
+                int selected = r.Next(0, randomMovies.Count());
+                randomMovies.Add(randomMovies[selected]);
+            }
+            return randomMovies;
+        }
+
+        public List<string> GetShowCategories()
+        {
+            //...../api/movies/GetShowCategories
+            moviedbEntities ORM = new moviedbEntities();
+
+            return ORM.movies1.Where(x => x.category != null).Select(x => x.category).Distinct().ToList();
+        }
+
+        [HttpGet]
+        public List<movie> SearchMovieTitles(string Search)
+        {
+            //...../api/movies/SearchMovieTitles?Search=27
+            moviedbEntities ShowsORM = new moviedbEntities();
+
+            List<movie> movieList = ShowsORM.movies1.ToList();
+            List<movie> searchResults = new List<movie>();
+            for (int i = 0; i < movieList.Count; i++)
+            {
+                if (movieList[i].title.Contains(Search))
+                {
+                    searchResults.Add(movieList[i]);
+                }
+            }
+            return searchResults;
         }
 
 
